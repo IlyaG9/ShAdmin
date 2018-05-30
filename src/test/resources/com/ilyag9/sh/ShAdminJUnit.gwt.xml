@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to="ShAdmin">
+  <!-- Inherit our applications main module.                      -->
+  <inherits name='com.ilyag9.sh.ShAdmin' />
+
+  <!-- Specify the path to any remote services.                   -->
+  <servlet path="/ShAdmin/greet" class="com.ilyag9.sh.server.GreetingServiceImpl" />
+
+</module>
