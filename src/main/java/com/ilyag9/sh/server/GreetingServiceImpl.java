@@ -1,8 +1,15 @@
 package com.ilyag9.sh.server;
 
-import com.ilyag9.sh.client.GreetingService;
-import com.ilyag9.sh.shared.FieldVerifier;
+import java.util.Date;
+
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.ilyag9.sh.client.GreetingService;
+import com.ilyag9.sh.server.dao.RemarkDAO;
+import com.ilyag9.sh.server.dao.entity.RemarkEntity;
+import com.ilyag9.sh.shared.FieldVerifier;
 
 /**
  * The server side implementation of the RPC service.
@@ -11,7 +18,16 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class GreetingServiceImpl extends RemoteServiceServlet implements
     GreetingService {
 
+	
+	RemarkDAO remarkDAO;
+	
   public String greetServer(String input) throws IllegalArgumentException {
+	  
+	  if(remarkDAO==null) {
+		  WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+		  remarkDAO= applicationContext.getBean(RemarkDAO.class);
+	  }
+	  
     // Verify that the input is valid.
     if (!FieldVerifier.isValidName(input)) {
       // If the input is not valid, throw an IllegalArgumentException back to
@@ -26,9 +42,14 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
     // Escape data from the client to avoid cross-site script vulnerabilities.
     input = escapeHtml(input);
     userAgent = escapeHtml(userAgent);
-
-    return "Hello, " + input + "!<br><br>I am running " + serverInfo
-        + ".<br><br>It looks like you are using:<br>" + userAgent;
+    RemarkEntity obj=new RemarkEntity();
+    obj.setId(1L);
+    obj.setText("yr");
+    obj.setTags("ds");
+    obj.setTitle("ss");
+    obj.setPublishedDate(new Date());
+    remarkDAO.create(obj);
+    return "created, " + remarkDAO.get(obj.getId()).getText() + "!";
   }
 
   /**

@@ -5,20 +5,33 @@
 
 <web-app>
 
-  <!-- Servlets -->
-  <servlet>
-    <servlet-name>greetServlet</servlet-name>
-    <servlet-class>com.ilyag9.sh.server.GreetingServiceImpl</servlet-class>
-  </servlet>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<!-- Servlets -->
 
-  <servlet-mapping>
-    <servlet-name>greetServlet</servlet-name>
-    <url-pattern>/ShAdmin/greet</url-pattern>
-  </servlet-mapping>
 
-  <!-- Default page to serve -->
-  <welcome-file-list>
-    <welcome-file>ShAdmin.html</welcome-file>
-  </welcome-file-list>
+	<servlet>
+		<servlet-name>springGwtRemoteServiceServlet</servlet-name>
+		<servlet-class>org.spring4gwt.server.SpringGwtRemoteServiceServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>greetServlet</servlet-name>
+		<servlet-class>com.ilyag9.sh.server.GreetingServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>greetServlet</servlet-name>
+		<url-pattern>/ShAdmin/greet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>springGwtRemoteServiceServlet</servlet-name>
+		<url-pattern>/ShAdmin/springGwtServices/*</url-pattern>
+	</servlet-mapping>
+	
+	<!-- Default page to serve -->
+	<welcome-file-list>
+		<welcome-file>ShAdmin.html</welcome-file>
+	</welcome-file-list>
 
 </web-app>
